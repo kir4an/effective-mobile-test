@@ -2,6 +2,7 @@ package com.example.effectivemobiletest.controller;
 
 import com.example.effectivemobiletest.dto.TaskDto;
 import com.example.effectivemobiletest.dto.TaskStatusDto;
+import com.example.effectivemobiletest.exception.TaskNotFoundException;
 import com.example.effectivemobiletest.model.SecurityUser;
 import com.example.effectivemobiletest.model.Task;
 import com.example.effectivemobiletest.service.TaskService;
@@ -11,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 //Система должна обеспечивать создание, редактирование, удаление и просмотр задач
 @RestController
@@ -44,10 +47,13 @@ public class TaskController {
                 .build();
     }
     @GetMapping("/{taskId}")
-    public ResponseEntity<?> getTask(@PathVariable int taskId){
+    public ResponseEntity<Task> getTask(@PathVariable Long taskId) {
+        Task task = taskService.findTaskById(taskId)
+                .orElseThrow(() -> new TaskNotFoundException("Task not found"));
+
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(task);
     }
     @PostMapping("/change")
     public ResponseEntity<?> changeTaskStatus(@RequestBody @Valid TaskStatusDto taskStatusDto,
