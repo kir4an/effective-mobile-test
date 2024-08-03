@@ -1,0 +1,3 @@
+spring:
+    application:
+        name: effective-mobile-test
