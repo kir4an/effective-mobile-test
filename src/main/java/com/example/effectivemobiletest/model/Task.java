@@ -1,11 +1,14 @@
 package com.example.effectivemobiletest.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 
+@Builder
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -26,4 +29,6 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "executor_id")
     private User executor;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 }

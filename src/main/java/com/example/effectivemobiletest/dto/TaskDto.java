@@ -22,5 +22,4 @@ public class TaskDto {
     private TaskStatus status;
     @NotBlank
     private TaskPriority taskPriority;
-    private Long executorId;
 }

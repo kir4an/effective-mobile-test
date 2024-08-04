@@ -10,21 +10,21 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
-//Система должна обеспечивать создание, редактирование, удаление и просмотр задач
+
 @RestController
 @RequestMapping("api/v1/task")
 public class TaskController {
     @Autowired
-    TaskService taskService;
+    private TaskService taskService;
 
     @PostMapping
+    //Сделано
     public ResponseEntity<?> createTask(@RequestBody @Valid TaskDto taskDto){
         taskService.createTask(taskDto);
 
@@ -33,6 +33,7 @@ public class TaskController {
                 .build();
     }
     @GetMapping
+    //Сделано
     public ResponseEntity<?> getAllTasks(){
         List<Task> taskList = taskService.getAllTasks();
 
@@ -41,12 +42,16 @@ public class TaskController {
                 .body(taskList);
     }
     @DeleteMapping
-    public ResponseEntity<?> deleteTask(@RequestParam int taskId){
+    @PreAuthorize("@taskService.isUserAuthor(#taskId)")
+    public ResponseEntity<?> deleteTask(@RequestParam Long taskId){
+        taskService.deleteTaskById(taskId);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
     }
     @GetMapping("/{taskId}")
+    //Сделано
     public ResponseEntity<Task> getTask(@PathVariable Long taskId) {
         Task task = taskService.findTaskById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
@@ -55,15 +60,25 @@ public class TaskController {
                 .status(HttpStatus.OK)
                 .body(task);
     }
+
     @PostMapping("/change")
+    //Сделано
     public ResponseEntity<?> changeTaskStatus(@RequestBody @Valid TaskStatusDto taskStatusDto,
                                               @AuthenticationPrincipal SecurityUser securityUser){
+        taskService.changeTaskStatus(taskStatusDto,securityUser.getUser());
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
     }
-    @PostMapping("/change/executor/{executorId}")
-    public ResponseEntity<?> changeExecutorTask(@PathVariable int executorId){
+    @PostMapping("assign/executor/{taskId}/{executorId}")
+    @PreAuthorize("@taskService.isUserAuthor(#taskId)")
+    public ResponseEntity<?> assignExecutorTask(@PathVariable Long taskId,
+                                                @PathVariable Long executorId){
+
+
+        taskService.assignTaskToUser(taskId, executorId);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
