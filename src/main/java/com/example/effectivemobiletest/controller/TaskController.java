@@ -24,7 +24,6 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping
-    //Сделано
     public ResponseEntity<?> createTask(@RequestBody @Valid TaskDto taskDto){
         taskService.createTask(taskDto);
 
@@ -33,7 +32,6 @@ public class TaskController {
                 .build();
     }
     @GetMapping
-    //Сделано
     public ResponseEntity<?> getAllTasks(){
         List<Task> taskList = taskService.getAllTasks();
 
@@ -51,7 +49,6 @@ public class TaskController {
                 .build();
     }
     @GetMapping("/{taskId}")
-    //Сделано
     public ResponseEntity<Task> getTask(@PathVariable Long taskId) {
         Task task = taskService.findTaskById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found"));
@@ -62,7 +59,6 @@ public class TaskController {
     }
 
     @PostMapping("/change")
-    //Сделано
     public ResponseEntity<?> changeTaskStatus(@RequestBody @Valid TaskStatusDto taskStatusDto,
                                               @AuthenticationPrincipal SecurityUser securityUser){
         taskService.changeTaskStatus(taskStatusDto,securityUser.getUser());
