@@ -10,6 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
@@ -21,19 +22,24 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(auth -> auth
                         .requestMatchers("/api/v1/signup").permitAll()
-                        .requestMatchers("/api/v1/task/**").authenticated()
-
+                        .requestMatchers("/api/v1/task/**").hasRole("USER")
+                        .anyRequest().authenticated()
                 )
-
                 .sessionManagement(sessions -> sessions
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
+
+        http.addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(13);
+    }
+    @Bean
+    public JwtRequestFilter jwtRequestFilter() {
+        return new JwtRequestFilter();
     }
 
 }
