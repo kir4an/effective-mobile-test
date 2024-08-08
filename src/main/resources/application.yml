@@ -3,9 +3,9 @@ spring:
         name: effective-mobile-test
 
     datasource:
-        url: jdbc:postgresql://localhost:{APP_PORT}/{APP_DB_NAME}
-        username: {APP_USERNAME}
-        password: {APP_PASSWORD}
+        url: jdbc:postgresql://localhost:5434/effective_mobile
+        username: postgres
+        password: postgres
         driver-class-name: org.postgresql.Driver
 
     jpa:
@@ -13,3 +13,5 @@ spring:
             dialect: org.hibernate.dialect.PostgreSQLDialect
             ddl-auto: none
         show-sql: true
+    jwt:
+        secret: "your_32_character_long_secret_key_here"

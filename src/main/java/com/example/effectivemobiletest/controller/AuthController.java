@@ -1,6 +1,7 @@
 package com.example.effectivemobiletest.controller;
 
 import com.example.effectivemobiletest.Utils.JwtUtils;
+import com.example.effectivemobiletest.dto.LoginRequestDto;
 import com.example.effectivemobiletest.dto.RegistrationRequestDto;
 import com.example.effectivemobiletest.dto.TokenResponseDto;
 import com.example.effectivemobiletest.model.User;
@@ -28,8 +29,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String email,
-                                   @RequestParam String password) {
+    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequest) {
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
 
         TokenResponseDto token = userService.authenticateUser(email, password);
 
