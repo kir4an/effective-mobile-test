@@ -8,4 +8,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface CommentRepository extends PagingAndSortingRepository<Comment, Long> {
     Page<Comment> findByTaskId(Long taskId, Pageable pageable);
+    void save(Comment comment);
 }

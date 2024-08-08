@@ -21,7 +21,7 @@ public interface TaskService {
     void deleteTaskById(Long id);
     void assignTaskToUser(Long taskId, Long userId);
 
-    void changeTaskStatus(TaskStatusDto taskStatusDto, User currentUser);
+    void changeTaskStatus(TaskStatusDto taskStatusDto,User currentUser);
 
     void isUserAuthor(Long taskId);
 }

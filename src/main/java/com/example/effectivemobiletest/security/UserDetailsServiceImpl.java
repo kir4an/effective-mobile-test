@@ -7,6 +7,7 @@ import com.example.effectivemobiletest.model.User;
 import com.example.effectivemobiletest.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,11 @@ import java.util.Optional;
 @Slf4j
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-    UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username)  {
-        Optional<User> user = userRepository.findUserByEmail(username);
+        Optional<User> user = userRepository.findUserByUsername(username);
 
         return user
                 .map(SecurityUser::new)

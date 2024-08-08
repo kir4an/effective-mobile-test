@@ -21,8 +21,9 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(auth -> auth
-                        .requestMatchers("/api/v1/signup").permitAll()
+                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/task/**").hasRole("USER")
+                        .requestMatchers("api/v1/comment").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sessions -> sessions

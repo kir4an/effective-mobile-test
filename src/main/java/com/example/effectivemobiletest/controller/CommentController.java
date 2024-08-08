@@ -4,6 +4,7 @@ import com.example.effectivemobiletest.dto.CommentDto;
 import com.example.effectivemobiletest.model.Comment;
 import com.example.effectivemobiletest.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1/comment")
 public class CommentController {
+    @Autowired
     private CommentService commentService;
 
     @GetMapping
@@ -37,7 +39,7 @@ public class CommentController {
 
     @PostMapping("/{taskId}")
     public ResponseEntity<?> createComment(@RequestBody CommentDto commentDto,
-                                           @RequestParam Long taskId) {
+                                           @PathVariable Long taskId) {
         commentService.createComment(taskId,commentDto);
 
         return ResponseEntity

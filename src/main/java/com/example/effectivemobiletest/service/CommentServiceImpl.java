@@ -10,6 +10,7 @@ import com.example.effectivemobiletest.repository.CommentRepository;
 import com.example.effectivemobiletest.repository.TaskRepository;
 import com.example.effectivemobiletest.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,9 +19,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
-
+    @Autowired
     private CommentRepository commentRepository;
+    @Autowired
     private TaskRepository taskRepository;
+    @Autowired
     private UserRepository userRepository;
 
     @Override
@@ -43,6 +46,7 @@ public class CommentServiceImpl implements CommentService {
                 .content(commentDto.getComment())
                 .build();
         task.getComments().add(comment);
+        commentRepository.save(comment);
     }
     private static String getCurrentUser() {
         return SecurityContextHolder.getContext().getAuthentication().getName();

@@ -1,16 +1,16 @@
 package com.example.effectivemobiletest.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@Table(name = "comments")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +20,11 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
+    @JsonBackReference
     private User author;
 
     @ManyToOne
     @JoinColumn(name = "task_id")
+    @JsonBackReference
     private Task task;
 }

@@ -4,12 +4,10 @@ import com.example.effectivemobiletest.model.TaskPriority;
 import com.example.effectivemobiletest.model.TaskStatus;
 import com.example.effectivemobiletest.model.User;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @Builder
