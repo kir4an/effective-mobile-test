@@ -1,17 +1,16 @@
 package com.example.effectivemobiletest.controller;
 
-import com.example.effectivemobiletest.Utils.JwtUtils;
 import com.example.effectivemobiletest.dto.LoginRequestDto;
 import com.example.effectivemobiletest.dto.RegistrationRequestDto;
 import com.example.effectivemobiletest.dto.TokenResponseDto;
-import com.example.effectivemobiletest.model.User;
 import com.example.effectivemobiletest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")

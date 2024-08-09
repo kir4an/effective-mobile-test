@@ -15,11 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("taskService")
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
     @Autowired
@@ -52,8 +53,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public void deleteTaskById(Long taskId) {
-        taskRepository.deleteById(taskId);
+        taskRepository.deleteTaskById(taskId);
     }
 
     @Override
@@ -76,7 +78,7 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.save(task);
 
     }
-
+    @Override
     public void isUserAuthor(Long taskId) {
         String currentUserName = getCurrentUser();
         User currentUser = userRepository.findUserByUsername(currentUserName)
@@ -85,7 +87,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = getTask(taskId);
 
         if (!task.getAuthor().equals(currentUser)) {
-            throw new AccessDeniedException("User is not the author of the task");
+            throw new AccessDeniedException("You are not allowed to change this task");
         }
     }
 
@@ -105,10 +107,8 @@ public class TaskServiceImpl implements TaskService {
     private static void validTaskStatus(TaskStatusDto taskStatusDto) {
         for(TaskStatus taskStatus:TaskStatus.values()){
             if(taskStatusDto.getTaskStatus().equals(taskStatus)){
-                break;
-            }else{
-                throw new TaskStatusNotExistException("TaskStatus " + taskStatusDto.getTaskStatus() + "not exist");
+                return;
             }
-        }
+        }throw new TaskStatusNotExistException("TaskStatus " + taskStatusDto.getTaskStatus() + "not exist");
     }
 }

@@ -17,8 +17,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column()
     private String username;
+    @Column
     private String password;
+    @Column
     private String email;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -32,7 +35,9 @@ public class User {
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private Set<UserRole> roles = new HashSet<>();
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

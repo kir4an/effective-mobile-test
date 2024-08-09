@@ -20,34 +20,42 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/task")
 public class TaskController {
+
+    private final TaskService taskService;
+
     @Autowired
-    private TaskService taskService;
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @PostMapping
-    public ResponseEntity<?> createTask(@RequestBody @Valid TaskDto taskDto){
+    public ResponseEntity<?> createTask(@RequestBody @Valid TaskDto taskDto) {
         taskService.createTask(taskDto);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .build();
     }
+
     @GetMapping
-    public ResponseEntity<?> getAllTasks(){
+    public ResponseEntity<?> getAllTasks() {
         List<Task> taskList = taskService.getAllTasks();
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(taskList);
     }
+
     @DeleteMapping
     @PreAuthorize("@taskService.isUserAuthor(#taskId)")
-    public ResponseEntity<?> deleteTask(@RequestParam Long taskId){
+    public ResponseEntity<?> deleteTask(@RequestParam Long taskId) {
         taskService.deleteTaskById(taskId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
     }
+
     @GetMapping("/{taskId}")
     public ResponseEntity<Task> getTask(@PathVariable Long taskId) {
         Task task = taskService.findTaskById(taskId)
@@ -60,17 +68,18 @@ public class TaskController {
 
     @PostMapping("/change")
     public ResponseEntity<?> changeTaskStatus(@RequestBody @Valid TaskStatusDto taskStatusDto,
-                                              @AuthenticationPrincipal SecurityUser securityUser){
-        taskService.changeTaskStatus(taskStatusDto,securityUser.getUser());
+                                              @AuthenticationPrincipal SecurityUser securityUser) {
+        taskService.changeTaskStatus(taskStatusDto, securityUser.getUser());
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .build();
     }
+
     @PostMapping("assign/executor/{taskId}/{executorId}")
     @PreAuthorize("@taskService.isUserAuthor(#taskId)")
     public ResponseEntity<?> assignExecutorTask(@PathVariable Long taskId,
-                                                @PathVariable Long executorId){
+                                                @PathVariable Long executorId) {
 
 
         taskService.assignTaskToUser(taskId, executorId);

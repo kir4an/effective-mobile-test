@@ -13,5 +13,9 @@ spring:
             dialect: org.hibernate.dialect.PostgreSQLDialect
             ddl-auto: none
         show-sql: true
+
+    flyway:
+        locations: classpath:db/migration  # Укажите местоположение миграций
+
     jwt:
         secret: "your_32_character_long_secret_key_here"

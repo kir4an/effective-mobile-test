@@ -17,13 +17,17 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
     private String title;
+    @Column
     private String description;
 
     @Enumerated(EnumType.STRING)
+    @Column
     private TaskStatus status;
 
     @Enumerated(EnumType.STRING)
+    @Column
     private TaskPriority taskPriority;
 
     @ManyToOne
@@ -36,6 +40,6 @@ public class Task {
     @JsonBackReference
     private User executor;
 
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Comment> comments;
 }

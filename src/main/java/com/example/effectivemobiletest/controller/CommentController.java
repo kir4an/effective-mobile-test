@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +24,7 @@ public class CommentController {
     public ResponseEntity<?> getCommentsForTask(@RequestParam Long taskId,
                                                 @RequestParam(defaultValue = "0") int page,
                                                 @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page,size);
+        Pageable pageable = PageRequest.of(page, size);
 
 
         Page<Comment> comments = commentService.getCommentsForTask(taskId, pageable);
@@ -40,7 +38,7 @@ public class CommentController {
     @PostMapping("/{taskId}")
     public ResponseEntity<?> createComment(@RequestBody CommentDto commentDto,
                                            @PathVariable Long taskId) {
-        commentService.createComment(taskId,commentDto);
+        commentService.createComment(taskId, commentDto);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

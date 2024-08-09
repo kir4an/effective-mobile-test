@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -39,11 +41,15 @@ public class UserServiceImpl implements UserService {
     public TokenResponseDto authenticateUser(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User with email " + email + " not found"));
-
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new InvalidCredentialsException("Invalid credentials.");
         }
         String token = jwtUtils.generateToken(user.getUsername());
         return new TokenResponseDto(token);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }
