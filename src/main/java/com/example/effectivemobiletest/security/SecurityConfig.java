@@ -18,15 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    @Bean
-    @Order(2)
-    public SecurityFilterChain swSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/swagger-ui/*", "/v3/api-docs/**")
-                .permitAll());
-
-        return http.build();
-    }
 
     @Bean
     @Order(1)
@@ -34,6 +25,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeRequests(auth -> auth
+                        .requestMatchers("/swagger-ui/*", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/task/**").hasRole("USER")
                         .requestMatchers("api/v1/comment").hasRole("USER")

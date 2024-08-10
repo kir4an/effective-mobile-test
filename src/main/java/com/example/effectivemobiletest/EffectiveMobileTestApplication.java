@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
         ),
         servers = {
                 @Server(
-                        url = "http://localhost:8080/", description = "Local server"
+                        url = "http://localhost:8090/", description = "Local server"
                 )
         }
 )

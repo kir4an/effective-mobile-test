@@ -25,6 +25,7 @@ public class CommentController {
 
     @GetMapping
     @Operation(
+            summary = "Получение комментариев к задаче",
             description = "Этот метод позволяет получить список комментариев, связанных с указанной задачей. " +
                     "Можно использовать параметры для пагинации и фильтрации.",
             responses = {
@@ -55,7 +56,8 @@ public class CommentController {
 
     @PostMapping("/{taskId}")
     @Operation(
-            description = "Этот метод позволяет создать новый комментарий для зависимости задачи. " +
+            summary = "Создание комментария к задаче",
+            description = "Этот метод позволяет создать новый комментарий для задачи. " +
                     "Необходимо указать ID задачи и данные комментария.",
             responses = {
                     @ApiResponse(

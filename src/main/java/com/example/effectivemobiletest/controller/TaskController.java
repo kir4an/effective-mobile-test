@@ -35,6 +35,7 @@ public class TaskController {
 
     @PostMapping
     @Operation(
+            summary = "Создание задачи",
             description = "Создание новой задачи. " +
                     "Этот метод позволяет создавать задачу с заданными атрибутами. " +
                     "Необходимо указать заголовок, описание, приоритет и статус задачи.",
@@ -60,6 +61,7 @@ public class TaskController {
 
     @GetMapping
     @Operation(
+            summary = "Получение всех задач",
             description = "Получение всех задач. Этот метод возвращает список всех задач, " +
                     "которые находятся в системе. Результат может быть пустым, если " +
                     "задачи не найдены.",
@@ -89,6 +91,7 @@ public class TaskController {
     @DeleteMapping
     @PreAuthorize("@taskService.isUserAuthor(#taskId)")
     @Operation(
+            summary = "Удаление задачи по ID",
             description = "Удаление задачи по ID. Этот метод позволяет удалить задачу, " +
                     "если текущий пользователь является её автором. Необходимо передать ID " +
                     "задачи, которую нужно удалить.",
@@ -117,6 +120,7 @@ public class TaskController {
 
     @GetMapping("/{taskId}")
     @Operation(
+            summary = "Получение задачи по ID",
             description = "Получение задачи по ID. Этот метод возвращает задачу с указанным ID. " +
                     "Если задача не найдена, будет возвращено исключение.",
             responses = {
@@ -141,6 +145,7 @@ public class TaskController {
 
     @PostMapping("/change")
     @Operation(
+            summary = "Назначение исполнителя на задачу",
             description = "Изменение статуса задачи. Этот метод позволяет изменить статус задачи, " +
                     "если текущий пользователь является автором или исполнителем задачи.",
             responses = {
