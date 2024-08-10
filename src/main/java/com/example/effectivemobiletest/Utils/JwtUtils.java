@@ -34,6 +34,14 @@ public class JwtUtils {
                 .signWith(SECRET_KEY)
                 .compact();
     }
+    public String generateRefreshToken(String username) {
+        return Jwts.builder()
+                .subject(username)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME * 10))
+                .signWith(SECRET_KEY)
+                .compact();
+    }
 
     public boolean validateToken(String token, String username) {
         String user = extractUsername(token);

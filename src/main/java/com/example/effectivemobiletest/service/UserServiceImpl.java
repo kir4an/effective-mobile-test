@@ -4,6 +4,7 @@ import com.example.effectivemobiletest.Utils.JwtUtils;
 import com.example.effectivemobiletest.dto.RegistrationRequestDto;
 import com.example.effectivemobiletest.dto.TokenResponseDto;
 import com.example.effectivemobiletest.exception.InvalidCredentialsException;
+import com.example.effectivemobiletest.exception.UserNotFoundException;
 import com.example.effectivemobiletest.model.User;
 import com.example.effectivemobiletest.model.UserRole;
 import com.example.effectivemobiletest.repository.UserRepository;
@@ -44,12 +45,20 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new InvalidCredentialsException("Invalid credentials.");
         }
-        String token = jwtUtils.generateToken(user.getUsername());
-        return new TokenResponseDto(token);
+        String accessToken = jwtUtils.generateToken(user.getUsername());
+        String refreshToken = jwtUtils.generateRefreshToken(user.getUsername());
+        return new TokenResponseDto(accessToken,refreshToken);
     }
 
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public TokenResponseDto generateToken(String token) {
+        String tokenWithoutBearerStr = token.substring(7);
+        String username = jwtUtils.extractUsername(tokenWithoutBearerStr);
+        User user = userRepository.findUserByUsername(username).
+                orElseThrow(() -> new UserNotFoundException("User with id " + username + " not found"));
+
+        String accessToken = jwtUtils.generateToken(user.getUsername());
+        String refreshToken = jwtUtils.generateRefreshToken(user.getUsername());
+        return new TokenResponseDto(accessToken,refreshToken);
     }
 }
