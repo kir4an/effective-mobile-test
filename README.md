@@ -6,7 +6,7 @@ ____
 # Технологии
 В проекте использовались: Spring (Security,Data Jpa), Java 17, PostgreSQL, Flyway, Docker, JWT, TestContainers.
 ____
-#Запуск
+# Запуск
 1)Скачать проект
 2)Запустить базу данных через docker-compose
 3)Запустить программу при помощи функции main, находящейся в классе EffectiveMobileTestApplication
