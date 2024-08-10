@@ -79,7 +79,7 @@ public class TaskServiceImpl implements TaskService {
 
     }
     @Override
-    public void isUserAuthor(Long taskId) {
+    public boolean isUserAuthor(Long taskId) {
         String currentUserName = getCurrentUser();
         User currentUser = userRepository.findUserByUsername(currentUserName)
                 .orElseThrow(() -> new UserNotFoundException("User " + currentUserName + " not found"));
@@ -87,8 +87,23 @@ public class TaskServiceImpl implements TaskService {
         Task task = getTask(taskId);
 
         if (!task.getAuthor().equals(currentUser)) {
-            throw new AccessDeniedException("You are not allowed to change this task");
+            return false;
         }
+        return true;
+    }
+
+    @Override
+    public boolean isUserExecutor(Long taskId) {
+        String currentUserName = getCurrentUser();
+        User currentUser = userRepository.findUserByUsername(currentUserName)
+                .orElseThrow(() -> new UserNotFoundException("User " + currentUserName + " not found"));
+
+        Task task = getTask(taskId);
+
+        if (!task.getExecutor().equals(currentUser)) {
+            return false;
+        }
+        return true;
     }
 
     private Task getTask(Long taskId) {

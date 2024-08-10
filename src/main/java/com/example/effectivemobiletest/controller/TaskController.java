@@ -163,6 +163,7 @@ public class TaskController {
                     )
             }
     )
+    @PreAuthorize("@taskService.isUserAuthor(#taskStatusDto.getTaskId()) or @taskService.isUserExecutor(#taskStatusDto.getTaskId())")
     public ResponseEntity<?> changeTaskStatus(@RequestBody @Valid TaskStatusDto taskStatusDto,
                                               @AuthenticationPrincipal SecurityUser securityUser) {
         taskService.changeTaskStatus(taskStatusDto, securityUser.getUser());

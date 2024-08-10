@@ -23,5 +23,6 @@ public interface TaskService {
 
     void changeTaskStatus(TaskStatusDto taskStatusDto, User currentUser);
 
-    void isUserAuthor(Long taskId);
+    boolean isUserAuthor(Long taskId);
+    boolean isUserExecutor(Long taskId);
 }
