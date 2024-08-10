@@ -1,3 +1,6 @@
+server:
+    port: 8090
+
 spring:
     application:
         name: effective-mobile-test
@@ -15,7 +18,8 @@ spring:
         show-sql: true
 
     flyway:
-        locations: classpath:db/migration  # Укажите местоположение миграций
+        locations: classpath:db/migration
+        baselineOnMigrate: true
 
     jwt:
         secret: "your_32_character_long_secret_key_here"

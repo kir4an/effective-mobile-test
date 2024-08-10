@@ -50,7 +50,6 @@ class TaskControllerTestIT extends AbstractTestContainers {
     @Test
     void deleteTask_WithValidToken_ShouldReturnOk() throws Exception {
         Long taskIdToDelete = 1L;
-        ;
         var result = delete("/api/v1/task")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + obtainAccessToken("user1@example.com", "string"))
                 .param("taskId", taskIdToDelete.toString());
@@ -186,6 +185,6 @@ class TaskControllerTestIT extends AbstractTestContainers {
         MvcResult result = this.mockMvc.perform(requestBuilder).andReturn();
 
         TokenResponseDto token = objectMapper.readValue(result.getResponse().getContentAsString(), TokenResponseDto.class);
-        return token.getToken();
+        return token.getAccessToken();
     }
 }
