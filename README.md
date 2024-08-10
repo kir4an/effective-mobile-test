@@ -9,6 +9,6 @@ ____
 ____
 # Запуск
 1. Скачать проект
-2. Запустить базу данных через docker-compose
+2. Запустить базу данных, нажав на кнопку "services" в docker-compose файле
 3. Запустить программу при помощи функции main, находящейся в классе EffectiveMobileTestApplication
-4. Swagger-UI доступен в браузере по ссылке ** http://localhost:8090/swagger-ui/index.html **
+4. Swagger-UI доступен в браузере по ссылке **http://localhost:8090/swagger-ui/index.html**
