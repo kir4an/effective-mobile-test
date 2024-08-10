@@ -1,11 +1,8 @@
 package com.example.effectivemobiletest.Utils;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +31,7 @@ public class JwtUtils {
                 .signWith(SECRET_KEY)
                 .compact();
     }
+
     public String generateRefreshToken(String username) {
         return Jwts.builder()
                 .subject(username)

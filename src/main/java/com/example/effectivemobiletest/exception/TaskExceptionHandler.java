@@ -12,7 +12,7 @@ import java.util.List;
 public class TaskExceptionHandler {
     @ExceptionHandler(TaskNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseErrorDTO handleTaskNotFoundException(TaskNotFoundException taskNotFoundException){
+    public ResponseErrorDTO handleTaskNotFoundException(TaskNotFoundException taskNotFoundException) {
         return ResponseErrorDTO.builder()
                 .status(HttpStatus.NOT_FOUND)
                 .errorMessage(List.of(taskNotFoundException.getMessage()))

@@ -2,7 +2,6 @@ package com.example.effectivemobiletest.dto;
 
 import com.example.effectivemobiletest.model.TaskPriority;
 import com.example.effectivemobiletest.model.TaskStatus;
-import com.example.effectivemobiletest.model.User;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 

@@ -35,6 +35,7 @@ public class AuthController {
                 .status(HttpStatus.OK)
                 .body(token);
     }
+
     @GetMapping("token/refresh")
     public ResponseEntity<?> refreshTokens(@RequestHeader("Authorization") String token) {
         TokenResponseDto tokens = userService.generateToken(token);

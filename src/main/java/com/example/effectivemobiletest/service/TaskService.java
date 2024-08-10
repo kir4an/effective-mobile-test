@@ -3,7 +3,6 @@ package com.example.effectivemobiletest.service;
 import com.example.effectivemobiletest.dto.TaskDto;
 import com.example.effectivemobiletest.dto.TaskStatusDto;
 import com.example.effectivemobiletest.model.Task;
-import com.example.effectivemobiletest.model.TaskStatus;
 import com.example.effectivemobiletest.model.User;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +18,10 @@ public interface TaskService {
     Optional<Task> findTaskById(Long id);
 
     void deleteTaskById(Long id);
+
     void assignTaskToUser(Long taskId, Long userId);
 
-    void changeTaskStatus(TaskStatusDto taskStatusDto,User currentUser);
+    void changeTaskStatus(TaskStatusDto taskStatusDto, User currentUser);
 
     void isUserAuthor(Long taskId);
 }

@@ -5,7 +5,6 @@ import com.example.effectivemobiletest.dto.LoginRequestDto;
 import com.example.effectivemobiletest.dto.TokenResponseDto;
 import com.example.effectivemobiletest.model.Comment;
 import com.example.effectivemobiletest.repository.CommentRepository;
-import com.example.effectivemobiletest.repository.TaskRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,11 +20,9 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.List;
-
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(value = "/delete_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CommentControllerTestIT extends AbstractTestContainers{
+public class CommentControllerTestIT extends AbstractTestContainers {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -51,7 +48,7 @@ public class CommentControllerTestIT extends AbstractTestContainers{
     void getCommentsById_withValidToken_shouldReturnIsOk() throws Exception {
         Long taskId = 1L;
 
-        var result = get("/api/v1/comment" )
+        var result = get("/api/v1/comment")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + obtainAccessToken("user1@example.com", "string"))
                 .param("taskId", String.valueOf(taskId));
 
@@ -60,6 +57,7 @@ public class CommentControllerTestIT extends AbstractTestContainers{
                 (jsonPath("$", notNullValue()))
         );
     }
+
     @Test
     void createComment_withValidToken_shouldReturnIsCreated() throws Exception {
         Long taskId = 1L;
@@ -77,6 +75,7 @@ public class CommentControllerTestIT extends AbstractTestContainers{
         Page<Comment> list = commentRepository.findByTaskId(taskId, Pageable.unpaged());
         Assertions.assertEquals(3, list.getSize());
     }
+
     private String obtainAccessToken(String email, String password) throws Exception {
         LoginRequestDto preparedRequest = new LoginRequestDto(email, password);
 

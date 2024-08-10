@@ -22,4 +22,4 @@ spring:
         baselineOnMigrate: true
 
     jwt:
-        secret: "your_32_character_long_secret_key_here"
+        secret: "my_32_character_effective_mobile_secret_key_here"

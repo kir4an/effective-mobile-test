@@ -1,6 +1,5 @@
 package com.example.effectivemobiletest.security;
 
-import com.example.effectivemobiletest.exception.TaskNotFoundException;
 import com.example.effectivemobiletest.exception.UserNotFoundException;
 import com.example.effectivemobiletest.model.SecurityUser;
 import com.example.effectivemobiletest.model.User;
@@ -20,8 +19,9 @@ import java.util.Optional;
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+
     @Override
-    public UserDetails loadUserByUsername(String username)  {
+    public UserDetails loadUserByUsername(String username) {
         Optional<User> user = userRepository.findUserByUsername(username);
 
         return user
